@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Card Slider</title>
+  <style>
+    .slider-container {
+      position: relative;
+      max-width: 90%;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .card-slider {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none; /* Hide scrollbar on Firefox */
+      -ms-overflow-style: none; /* Hide scrollbar on IE and Edge */
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+      scroll-padding: 10px;
+    }
+
+    .card {
+      flex: 0 0 auto;
+      width: 100%;
+      scroll-snap-align: start;
+    }
+
+    .card-content {
+      padding: 10px;
+      text-align: center;
+    }
+
+    .card img {
+      max-width: 100%;
+      height: auto;
+    }
+
+
+    .slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  z-index: 1;
+  transition: background-color 0.3s ease;
+}
+
+/* .slider-button-prev {
+  left: 10px;
+} */
+
+/* .slider-button-next {
+  right: 10px;
+} */
+
+.slider-button:hover {
+  background-color: #0056b3;
+}
+
+    /* Responsive Styles */
+    @media (min-width: 769px) {
+      .card {
+        flex-basis: 20%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .card-slider {
+        flex-wrap: nowrap;
+      }
+
+      .card {
+        flex-basis: 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="slider-container">
+    <button id="prev-button" class="slider-button slider-button-prev">Previous</button>
+    <div class="card-slider" id="card-slider">
+      <div class="card">
+        <div class="card-content">
+          <img src="asset/images/p3.jpg" alt="Avatar" style="width: 100%;">
+          <a href="asset/books/document.pdf" class="btn">Download</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <img src="asset/images/p11.jpeg" alt="Avatar" style="width: 100%;">
+          <a href="asset/books/document.pdf" class="btn">Download</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <img src="asset/images/p5.jpg" alt="Avatar" style="width: 100%;">
+          <a href="asset/books/document.pdf" class="btn">Download</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <img src="asset/images/p11.jpeg" alt="Avatar" style="width: 100%;">
+          <a href="asset/books/document.pdf" class="btn">Download</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <img src="asset/images/p11.jpeg" alt="Avatar" style="width: 100%;">
+          <a href="asset/books/document.pdf" class="btn">Download</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <img src="asset/images/p3.jpg" alt="Avatar" style="width: 100%;">
+          <a href="asset/books/document.pdf" class="btn">Download</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <img src="asset/images/p2.jpg" alt="Avatar" style="width: 100%;">
+          <a href="asset/books/document.pdf" class="btn">Download</a>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <img src="asset/images/p1.jpeg" alt="Avatar" style="width: 100%;">
+          <a href="asset/books/document.pdf" class="btn">Download</a>
+        </div>
+      </div>
+      <!-- Add more card elements here -->
+    </div>
+    <button id="next-button" class="slider-button slider-button-next">Next</button>
+  </div>
+
+  <script>
+ // Slider
+// Slider
+const sliderContainer = document.querySelector('.slider-container');
+const cardSlider = document.getElementById('card-slider');
+const prevButton = document.getElementById('prev-button');
+const nextButton = document.getElementById('next-button');
+const cardWidth = cardSlider.querySelector('.card').offsetWidth;
+let scrollInterval;
+
+prevButton.addEventListener('click', () => {
+  cardSlider.scrollBy({
+    left: -cardWidth,
+    behavior: 'smooth'
+  });
+});
+
+nextButton.addEventListener('click', () => {
+  cardSlider.scrollBy({
+    left: cardWidth,
+    behavior: 'smooth'
+  });
+});
+
+function startSlider() {
+  scrollInterval = setInterval(() => {
+    cardSlider.scrollBy({
+      left: cardWidth,
+      behavior: 'smooth'
+    });
+
+    // Check if reached the end of the slider
+    if (cardSlider.scrollLeft + cardSlider.offsetWidth >= cardSlider.scrollWidth) {
+      cardSlider.scrollTo({ left: 0, behavior: 'smooth' });
+    }
+  }, 3000); // Adjust the interval duration (in milliseconds) as per your preference
+}
+
+function stopSlider() {
+  clearInterval(scrollInterval);
+}
+
+startSlider();
+
+sliderContainer.addEventListener('mouseenter', stopSlider);
+sliderContainer.addEventListener('mouseleave', startSlider);
+  </script>
+</body>
+</html>
